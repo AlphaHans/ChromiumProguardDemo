@@ -1,0 +1,71 @@
+import("//android_webview/variables.gni")
+import("//build/config/android/rules.gni")
+import("//third_party/jni_zero/jni_zero.gni")
+
+shared_library_with_jni("libdemo") {
+  output_name = "democore"
+
+  sources = [
+    "lib/webview_entry_point.cc",
+  ]
+
+  deps = [
+    "//android_webview/lib",
+    "//base",
+  ]
+  manual_jni_registration = true
+
+  remove_uncalled_jni = true
+  java_targets = [ ":demo_java" ]
+}
+
+demo_manifest = "$target_gen_dir/demo_manifest/AndroidManifest.xml"
+
+jinja_template("demo_manifest") {
+  input = "AndroidManifest.xml.jinja2"
+  output = demo_manifest
+}
+
+android_library("demo_java") {
+  sources = [
+    "java/com/demo/DemoActivity.java",
+  ]
+
+  deps = [
+    "//third_party/androidx:androidx_appcompat_appcompat_java",
+    "//third_party/androidx:androidx_activity_activity_java",
+    "//android_webview/glue:glue_java",
+  ]
+}
+
+android_assets("res_file_assets") {
+  sources = [ "dummy.dat" ]
+
+  disable_compression = true
+}
+
+android_apk("apk_demo") {
+  deps = [
+    "//android_webview:locale_pak_assets",
+    "//android_webview:pak_file_assets",
+    "//android_webview:resources",
+    "//android_webview:weblayer_webview_assets",
+    "//android_webview:pak_file_assets",
+    ":demo_java",
+    ":res_file_assets",
+  ]
+  product_config_java_packages = [ webview_product_config_java_package ]
+  apk_name = "demo"
+  android_manifest = demo_manifest
+  android_manifest_dep = ":demo_manifest"
+  shared_libraries = [ ":libdemo" ]
+  srcjar_deps = [ ":libdemo__jni_registration",]
+  version_name = "1.0-dev"
+  version_code = "1"
+  min_sdk_version = 21
+  if (!is_java_debug) {
+    print("enable proguard.")
+    proguard_enabled = true
+    proguard_configs = [ "proguard.txt" ]
+  }
+}

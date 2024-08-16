@@ -1,0 +1,4 @@
+-keep class com.demo.** {*;}
+-keep class androidx.** { *;}
+# add or crash in System.loadLibrary("democore") 
+-keep class J.N {*;}
