@@ -298,4 +298,4 @@ I searched apk_demo/gen/apk_demo/apk_demo/generated_java/input_srcjars/J/N.java 
 // Original name: org_chromium_android_1webview_AwBrowserContext_clearFormData
 public static native void MegOH44r(long nativeAwBrowserContext);
 ```
-I decompiled the compiled artifact demo.apk to check J/N.java and found that the method MegOH44r no longer exists, which confirms my assumption mentioned in question 1 of my email:
+I decompiled the compiled artifact demo.apk to check J/N.java and found that the method MegOH44r no longer exists, which confirms my assumption mentioned in question 1 of my email: The unused JNI methods being deleted by r8 due to them not being referenced in the Java
