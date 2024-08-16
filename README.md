@@ -1,6 +1,6 @@
 ## Clone
 * cd chromium/src
-* git clone https://github.com/AlphaHans/ChromiumProguardDemo.git
+* git clone https://github.com/AlphaHans/ChromiumProguardDemo.git apk_demo
 
 
 ## Build
