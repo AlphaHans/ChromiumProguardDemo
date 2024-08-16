@@ -288,4 +288,14 @@ adb intall out/apk_demo/apks/demo.apk
 2024-08-16 16:30:04.870  8215-8215  chromium                pid-8215                             I  [0816/163004.870269:INFO:webview_entry_point.cc(32)] hanszhli JNI_OnLoad RegisterNatives failed
 ```
 
+The key error can be seen as: 
+```
 Failed to register native method J.N.MegOH44r(J)V in /data/app/~~F1L2wnTqj4mn8SwHfrqQzw==/com.demo-hko5-U18O6TTEVOkzbXvIg==/base.apk
+```
+
+I searched apk_demo/gen/apk_demo/apk_demo/generated_java/input_srcjars/J/N.java and found the following information about MegOH44r: 
+```
+// Original name: org_chromium_android_1webview_AwBrowserContext_clearFormData
+public static native void MegOH44r(long nativeAwBrowserContext);
+```
+I decompiled the compiled artifact demo.apk to check J/N.java and found that the method MegOH44r no longer exists, which confirms my assumption mentioned in question 1 of my email:
