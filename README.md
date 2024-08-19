@@ -19,6 +19,13 @@ root_extra_deps = ["//apk_demo"]
 
 ## Run
 ### case1: run success
+* chromium/src/apk_demo/proguard.txt:
+```
+-keep class com.demo.** {*;}
+-keep class androidx.** { *;}
+# add or crash in System.loadLibrary("democore") 
+-keep class J.N {*;}
+```
 * install apk
 ```
 adb intall out/apk_demo/apks/demo.apk
